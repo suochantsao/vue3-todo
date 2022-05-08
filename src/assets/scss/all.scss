@@ -1,0 +1,26 @@
+// Import
+@import "reset";
+@import "variable";
+
+// Font
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+TC:100,400,500&display=swap&subset=chinese-traditional");
+
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "Noto Sans TC", "Helvetica Neue", Helvetica, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "微軟正黑體", Arial, sans-serif;
+}
+#app {
+  background-color: $primary-yellow;
+}
+
+// Media Queries
+$pc-media: 1100px;
+
+@mixin pc-width() {
+  @media all and (max-width: $pc-media) {
+    @content;
+  }
+}
