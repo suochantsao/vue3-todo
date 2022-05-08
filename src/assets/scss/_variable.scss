@@ -1,2 +1,12 @@
 // Color
 $primary-yellow: #ffd370;
+$primary-black: #333333;
+
+// Media Queries
+$pc-media: 1000px;
+
+@mixin pc-width() {
+  @media all and (min-width: $pc-media) {
+    @content;
+  }
+}

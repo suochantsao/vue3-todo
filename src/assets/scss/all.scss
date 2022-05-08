@@ -15,12 +15,3 @@ body {
 #app {
   background-color: $primary-yellow;
 }
-
-// Media Queries
-$pc-media: 1100px;
-
-@mixin pc-width() {
-  @media all and (max-width: $pc-media) {
-    @content;
-  }
-}

@@ -1,7 +1,8 @@
 <template>
   <div class="input-component">
-    <span>{{ inputName }}</span>
-    <input type="text" />
+    <span>{{ inputData.title }}</span>
+    <input :type="inputData.inputType" :placeholder="inputData.placeholder" />
+    <span class="hint-text">此欄位不可為空</span>
   </div>
 </template>
 
@@ -9,10 +10,15 @@
 export default {
   name: "Input",
   props: {
-    "input-name": {
-      type: String,
+    "input-data": {
+      default: {
+        title: "",
+        placeholder: "",
+        inputType: "",
+      },
     },
   },
+  setup() {},
 };
 </script>
 
@@ -30,12 +36,16 @@ export default {
     border-radius: 10px;
     padding: 11px 10px;
     line-height: 12px;
-    margin-bottom: 2rem;
     border: 2px solid white;
   }
   input:focus {
     outline: none;
-    border: 2px solid #333333;
+    border: 2px solid $primary-black;
+  }
+  .hint-text {
+    font-size: 14px;
+    margin: 0.3rem 0 1rem 0;
+    color: transparent;
   }
 }
 </style>
