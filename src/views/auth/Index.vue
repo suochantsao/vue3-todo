@@ -28,7 +28,7 @@ $pc-media: 1000px;
 .signup-container {
   width: 100%;
   height: 100vh;
-  padding: 3rem 2.5rem;
+  padding: 0 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
