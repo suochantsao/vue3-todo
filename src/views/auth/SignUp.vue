@@ -69,7 +69,7 @@ export default {
   align-items: center;
   p {
     font-size: 24px;
-    margin: 1.2rem 0 3rem 0;
+    margin: 1.2rem 0;
     text-align: center;
   }
   .signup-btn {

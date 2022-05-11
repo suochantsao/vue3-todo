@@ -34,10 +34,13 @@ export default {
 <style lang="scss" scoped>
 .todo-container {
   width: 100%;
-  padding: 1rem;
+  padding: 0 1rem;
   height: 100vh;
+  max-height: -webkit-fill-available;
+
   nav {
     margin-bottom: 1rem;
+    padding-top: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -17,17 +17,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$pc-media: 1000px;
-
-@mixin pc-width() {
-  @media all and (min-width: $pc-media) {
-    @content;
-  }
-}
-
 .signup-container {
   width: 100%;
   height: 100vh;
+  max-height: -webkit-fill-available;
   padding: 0 2.5rem;
   display: flex;
   flex-direction: column;
