@@ -1,7 +1,15 @@
 <template>
   <div class="input-component">
     <span>{{ inputData.title }}</span>
-    <input :type="inputData.inputType" :placeholder="inputData.placeholder" />
+    <div class="input-block">
+      <input :type="inputData.inputType" :placeholder="inputData.placeholder" />
+      <img
+        src="@/assets/img/plus.png"
+        alt=""
+        srcset=""
+        v-if="inputData.todoIcon"
+      />
+    </div>
     <span class="hint-text">此欄位不可為空</span>
   </div>
 </template>
@@ -30,17 +38,26 @@ export default {
     font-size: 14px;
     display: block;
   }
-  input {
-    width: 100%;
-    border: none;
+  .input-block {
+    display: flex;
+    background-color: #fff;
     border-radius: 10px;
-    padding: 11px 10px;
-    line-height: 12px;
-    border: 2px solid white;
-  }
-  input:focus {
-    outline: none;
-    border: 2px solid $primary-black;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+
+    img {
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+    input {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 10px;
+      font-size: 18px;
+    }
+    input:focus {
+      outline: none;
+    }
   }
   .hint-text {
     font-size: 14px;
