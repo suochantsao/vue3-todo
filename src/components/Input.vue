@@ -10,7 +10,7 @@
         v-if="inputData.todoIcon"
       />
     </div>
-    <span class="hint-text">此欄位不可為空</span>
+    <span class="hint-text" v-if="!inputData.todoIcon">此欄位不可為空</span>
   </div>
 </template>
 
@@ -23,6 +23,7 @@ export default {
         title: "",
         placeholder: "",
         inputType: "",
+        todoIcon: "",
       },
     },
   },
@@ -51,6 +52,7 @@ export default {
     input {
       width: 100%;
       border: none;
+      margin-left: 5px;
       border-radius: 10px;
       padding: 12px 10px;
       font-size: 18px;
