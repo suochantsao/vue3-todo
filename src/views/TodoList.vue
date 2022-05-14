@@ -11,13 +11,24 @@
           <span>目前尚無待辦事項 </span>
           <img src="@/assets/img/empty.png" alt="" />
         </div>
+        <div class="todolist-block">
+          <ul class="filter-tab">
+            <li :class="data.filter === 'All' ? data.selected : ''">全部</li>
+            <li :class="data.filter === 'UnComplete' ? data.selected : ''">
+              待完成
+            </li>
+            <li :class="data.filter === 'Completed' ? data.selected : ''">
+              已完成
+            </li>
+          </ul>
+          <ul class="todo-list"></ul>
+        </div>
       </div>
     </main>
   </div>
 </template>
 <script>
 // Component
-
 import Input from "@/components/Input";
 
 // Methods
@@ -26,6 +37,10 @@ import { ref } from "vue";
 
 const todoInputData = ref({
   todoIcon: true,
+});
+const data = ref({
+  filter: "All",
+  selected: "selected-tab",
 });
 
 export default {
@@ -39,6 +54,7 @@ export default {
     return {
       toLoginPage,
       todoInputData,
+      data,
     };
   },
 };
@@ -72,12 +88,31 @@ export default {
     display: flex;
     justify-content: center;
     .non-data-block {
-      display: flex;
+      display: none;
+      // display: flex;
       flex-direction: column;
       justify-content: center;
       span {
         text-align: center;
         margin: 2rem 0 1rem 0;
+      }
+    }
+    .todolist-block {
+      width: 100%;
+      border-radius: 5px;
+      background-color: #fff;
+      .filter-tab {
+        display: flex;
+        justify-content: space-evenly;
+        line-height: 3.5rem;
+        li {
+          width: 100%;
+          cursor: pointer;
+          text-align: center;
+        }
+        .selected-tab {
+          border-bottom: 2px solid #333333;
+        }
       }
     }
   }
