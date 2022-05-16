@@ -15,6 +15,12 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
+const inputValue = ref({
+  data: "",
+});
+
 export default {
   name: "Input",
   props: {
@@ -27,7 +33,11 @@ export default {
       },
     },
   },
-  setup() {},
+  setup() {
+    return {
+      inputValue,
+    };
+  },
 };
 </script>
 

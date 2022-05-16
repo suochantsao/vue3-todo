@@ -1,8 +1,8 @@
 <template>
   <div class="input-block">
     <p>最實用的線上代辦事項服務</p>
-    <Input :input-data="emailInputData" />
-    <Input :input-data="passwordInputData" />
+    <Input :input-data="EMAILINPUTDATA" v-model="TEST.data" />
+    <Input :input-data="PASSWORDINPUTDATA" />
     <Button :btn-name="'登入'" @click="toSignUpPage('/')" />
     <span class="signup-btn" @click="toSignUpPage('/auth/signup')"
       >註冊帳號</span
@@ -18,16 +18,20 @@ import Button from "@/components/Button.vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
-const emailInputData = ref({
+const EMAILINPUTDATA = ref({
   title: "Email",
   placeholder: "請輸入 Email",
   inputType: "email",
 });
 
-const passwordInputData = ref({
+const PASSWORDINPUTDATA = ref({
   title: "Password",
   placeholder: "請輸入密碼",
   inputType: "password",
+});
+
+const TEST = ref({
+  data: "",
 });
 
 export default {
@@ -36,12 +40,14 @@ export default {
   setup() {
     const router = useRouter();
     const toSignUpPage = (path) => {
+      console.log(TEST.value.data);
       router.push(path);
     };
     return {
       toSignUpPage,
-      emailInputData,
-      passwordInputData,
+      EMAILINPUTDATA,
+      PASSWORDINPUTDATA,
+      TEST,
     };
   },
 };
