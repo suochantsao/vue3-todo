@@ -40,7 +40,6 @@ export default {
   setup() {
     const router = useRouter();
     const toSignUpPage = (path) => {
-      console.log(TEST.value.data);
       router.push(path);
     };
     return {

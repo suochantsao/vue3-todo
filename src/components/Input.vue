@@ -2,12 +2,17 @@
   <div class="input-component">
     <span>{{ inputData.title }}</span>
     <div class="input-block">
-      <input :type="inputData.inputType" :placeholder="inputData.placeholder" />
+      <!-- 要使用 keypress 解決中文選字直接觸發的問題 -->
+      <input
+        v-model="Input.todo"
+        :type="inputData.inputType"
+        :placeholder="inputData.placeholder"
+        @keypress.enter="addTodo()"
+      />
       <img
         src="@/assets/img/plus.png"
-        alt=""
-        srcset=""
         v-if="inputData.todoIcon"
+        @click="addTodo()"
       />
     </div>
     <span class="hint-text" v-if="!inputData.todoIcon">此欄位不可為空</span>
@@ -19,6 +24,9 @@ import { ref } from "vue";
 
 const inputValue = ref({
   data: "",
+});
+const Input = ref({
+  todo: "",
 });
 
 export default {
@@ -33,9 +41,20 @@ export default {
       },
     },
   },
-  setup() {
+  setup(props, { emit }) {
+    const addTodo = () => {
+      if (Input.value.todo === "") {
+        alert("請先輸入代辦");
+        return;
+      }
+      console.log("Test Add Todo", Input.value.todo);
+      emit("newTodo", Input.value.todo);
+      Input.value.todo = "";
+    };
     return {
       inputValue,
+      addTodo,
+      Input,
     };
   },
 };

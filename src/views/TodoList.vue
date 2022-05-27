@@ -3,25 +3,23 @@
     <nav>
       <img class="logo-img" src="@/assets/img/logo_lg.png" alt="LOGO" />
       <div class="nav-btn-block">
-        <span class="user-name" @click="toLoginPage"
-          >{{ data.userName }} 的代辦</span
-        >
+        <span class="user-name">{{ DATA.userName }} 的代辦</span>
         <span class="logout-btn" @click="toLoginPage">登出</span>
       </div>
     </nav>
     <main>
-      <Input :input-data="todoInputData" />
+      <Input :input-data="todoInputData" @newTodo="addNewTodo" />
       <div class="list-section">
-        <div class="non-data-block" v-if="data.listLength === 0">
+        <div class="non-data-block" v-if="DATA.listAry.length === 0">
           <span>目前尚無待辦事項 </span>
           <img src="@/assets/img/empty.png" alt="" />
         </div>
-        <div class="todolist-block" v-if="data.listLength !== 0">
+        <div class="todolist-block" v-if="DATA.listAry.length !== 0">
           <FilterTab />
-          <Todo />
+          <Todo :todolist="DATA.listAry" />
           <ul class="complete-block">
-            <li>{{ data.listLength }} 個待完成項目</li>
-            <li class="clean-btn">清除已完成項目</li>
+            <li>{{ DATA.listLength }} 個待完成項目</li>
+            <li class="clean-btn" @click="delCompletedTodo">清除已完成項目</li>
           </ul>
         </div>
       </div>
@@ -36,17 +34,22 @@ import FilterTab from "@/components/FilterTab";
 
 // Methods
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 const todoInputData = ref({
   todoIcon: true,
   placeholder: "新增待辦事項",
 });
-const data = ref({
+
+const DATA = ref({
   filter: "All",
   selected: "selected-tab",
   userName: "Angela",
-  listLength: 1,
+  listAry: [
+    { todo: "寫完 Vue3 todo", isCheck: true },
+    { todo: "測試 Data", isCheck: false },
+  ],
+  listLength: 0,
 });
 
 export default {
@@ -58,13 +61,50 @@ export default {
       router.push("/auth/login");
     };
     const changeFilter = (filter) => {
-      data.value.filter = filter;
+      DATA.value.filter = filter;
     };
+    const addNewTodo = (value) => {
+      DATA.value.listAry.push({
+        todo: value,
+        isCheck: false,
+      });
+    };
+    const countAryLength = (value) => {
+      DATA.value.listLength = 0;
+      value.forEach((item) => {
+        if (item.isCheck === false) {
+          DATA.value.listLength += 1;
+        }
+      });
+    };
+
+    const delCompletedTodo = () => {
+      console.log("test click clear all completed todo");
+
+      const ary = DATA.value.listAry.filter((item) => {
+        return item.isCheck !== true;
+      });
+
+      console.log(ary);
+      DATA.value.listAry = ary;
+      // console.log(DATA.value.listAry);
+    };
+
+    onMounted(() => {
+      countAryLength(DATA.value.listAry);
+    });
+    watch(DATA.value.listAry, (value) => {
+      countAryLength(value);
+    });
+
     return {
       toLoginPage,
       todoInputData,
-      data,
+      DATA,
       changeFilter,
+      addNewTodo,
+      countAryLength,
+      delCompletedTodo,
     };
   },
 };

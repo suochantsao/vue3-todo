@@ -1,42 +1,61 @@
 <template lang="">
-  <ul class="todo-list">
+  <ul class="todo-list" :key="index" v-for="(item, index) in LIST">
     <li>
       <img
-        v-if="!checkTodo.isCheck"
+        v-if="!item.isCheck"
         src="@/assets/img/checkbox.png"
-        @click="completeCheck()"
+        @click="completeCheck(index)"
       />
       <img
-        v-if="checkTodo.isCheck"
+        v-if="item.isCheck"
         src="@/assets/img/check.png"
-        @click="completeCheck()"
+        @click="completeCheck(index)"
       />
-      <p :class="checkTodo.isCheck ? checkTodo.checkStyle : ''">
-        寫完 Vue 3 Todolist
-      </p>
+      <input v-model="item.todo" :class="{ checked: item.isCheck }" />
     </li>
+
     <li>
-      <img src="@/assets/img/Vector.png" alt="" srcset="" />
+      <img src="@/assets/img/Vector.png" @click="delTodo(index)" />
     </li>
   </ul>
 </template>
 <script>
-import { ref } from "vue";
-
-const checkTodo = ref({
-  isCheck: false,
-  checkStyle: "checked",
-});
+import { ref, watch } from "vue";
 
 export default {
   name: "TodoComponent",
-  setup() {
-    const completeCheck = () => {
-      checkTodo.value.isCheck = !checkTodo.value.isCheck;
+  // * 22/05/27 不能直接修改 props 的值，會噴 Unexpected mutation of 'props 的值' prop
+  props: {
+    todolist: {
+      default: [],
+    },
+  },
+  setup(props) {
+    watch(
+      props.todolist,
+      (value) => {
+        LIST.value = value;
+        console.log(value);
+      },
+      {
+        deep: true,
+      }
+    );
+
+    const LIST = ref([...props.todolist]);
+
+    const completeCheck = (index) => {
+      LIST.value[index].isCheck = !LIST.value[index].isCheck;
     };
+    const delTodo = (index) => {
+      LIST.value.splice(index, 1);
+      console.log(LIST.value);
+    };
+
     return {
-      checkTodo,
       completeCheck,
+      LIST,
+      delTodo,
     };
   },
 };
@@ -52,18 +71,22 @@ export default {
   border-bottom: 1px solid #e5e5e5;
   li {
     display: flex;
-    font-size: 14px;
+    font-size: 1em;
     align-items: center;
 
-    p {
-      margin-left: 0.8rem;
-    }
     .checked {
       color: #9f9a91;
+      padding: 1px 4px;
       text-decoration-line: line-through;
     }
     img {
       cursor: pointer;
+    }
+    input {
+      border: none;
+      font-size: 1em;
+      margin-left: 8px;
+      outline: none;
     }
   }
 }
