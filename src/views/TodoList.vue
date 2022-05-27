@@ -10,13 +10,13 @@
     <main>
       <Input :input-data="todoInputData" @newTodo="addNewTodo" />
       <div class="list-section">
-        <div class="non-data-block" v-if="DATA.listAry.length === 0">
+        <div class="non-data-block" v-if="DATA.activeAry.length === 0">
           <span>目前尚無待辦事項 </span>
           <img src="@/assets/img/empty.png" alt="" />
         </div>
-        <div class="todolist-block" v-if="DATA.listAry.length !== 0">
+        <div class="todolist-block" v-if="DATA.activeAry.length !== 0">
           <FilterTab />
-          <Todo :todolist="DATA.listAry" />
+          <Todo :todolist="DATA.activeAry" />
           <ul class="complete-block">
             <li>{{ DATA.listLength }} 個待完成項目</li>
             <li class="clean-btn" @click="delCompletedTodo">清除已完成項目</li>
@@ -45,10 +45,11 @@ const DATA = ref({
   filter: "All",
   selected: "selected-tab",
   userName: "Angela",
-  listAry: [
-    { todo: "寫完 Vue3 todo", isCheck: true },
-    { todo: "測試 Data", isCheck: false },
+  activeAry: [
+    // { todo: "寫完 Vue3 todo", isCheck: false },
+    // { todo: "測試 Data", isCheck: false },
   ],
+  completedArr: [],
   listLength: 0,
 });
 
@@ -64,7 +65,7 @@ export default {
       DATA.value.filter = filter;
     };
     const addNewTodo = (value) => {
-      DATA.value.listAry.push({
+      DATA.value.activeAry.push({
         todo: value,
         isCheck: false,
       });
@@ -80,20 +81,19 @@ export default {
 
     const delCompletedTodo = () => {
       console.log("test click clear all completed todo");
-
-      const ary = DATA.value.listAry.filter((item) => {
-        return item.isCheck !== true;
-      });
-
-      console.log(ary);
-      DATA.value.listAry = ary;
-      // console.log(DATA.value.listAry);
+      const Arr = DATA.value.activeAry;
+      for (let i = Arr.length - 1; i >= 0; i--) {
+        if (Arr[i].isCheck === true) {
+          DATA.value.activeAry.splice(i, 1);
+        }
+      }
+      console.log(DATA.value.activeAry);
     };
 
     onMounted(() => {
-      countAryLength(DATA.value.listAry);
+      countAryLength(DATA.value.activeAry);
     });
-    watch(DATA.value.listAry, (value) => {
+    watch(DATA.value.activeAry, (value) => {
       countAryLength(value);
     });
 
