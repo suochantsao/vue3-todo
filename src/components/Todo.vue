@@ -24,13 +24,14 @@ import { ref, watch } from "vue";
 
 export default {
   name: "TodoComponent",
-  // * 22/05/27 不能直接修改 props 的值，會噴 Unexpected mutation of 'props 的值' prop
+  // * 22/05/25 不能直接修改 props 的值，會噴 Unexpected mutation of 'props 的值' prop
   props: {
     todolist: {
       default: [],
     },
   },
   setup(props) {
+    // * 22/05/28 某些陣列方法不會觸發 watch
     watch(
       props.todolist,
       (value) => {

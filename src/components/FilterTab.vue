@@ -32,9 +32,10 @@ const data = ref({
 
 export default {
   name: "FilterComponent",
-  setup() {
+  setup(props, { emit }) {
     const changeFilter = (filter) => {
       data.value.filter = filter;
+      emit("changeFilter", filter);
     };
     return {
       data,

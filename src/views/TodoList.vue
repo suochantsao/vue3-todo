@@ -4,7 +4,7 @@
       <img class="logo-img" src="@/assets/img/logo_lg.png" alt="LOGO" />
       <div class="nav-btn-block">
         <span class="user-name">{{ DATA.userName }} 的代辦</span>
-        <span class="logout-btn" @click="toLoginPage">登出</span>
+        <!-- <span class="logout-btn" @click="toLoginPage">登出</span> -->
       </div>
     </nav>
     <main>
@@ -15,7 +15,7 @@
           <img src="@/assets/img/empty.png" alt="" />
         </div>
         <div class="todolist-block" v-if="DATA.activeAry.length !== 0">
-          <FilterTab />
+          <FilterTab @changeFilter="clickFilter" />
           <Todo :todolist="DATA.activeAry" />
           <ul class="complete-block">
             <li>{{ DATA.listLength }} 個待完成項目</li>
@@ -45,10 +45,7 @@ const DATA = ref({
   filter: "All",
   selected: "selected-tab",
   userName: "Angela",
-  activeAry: [
-    // { todo: "寫完 Vue3 todo", isCheck: false },
-    // { todo: "測試 Data", isCheck: false },
-  ],
+  activeAry: [],
   completedArr: [],
   listLength: 0,
 });
@@ -70,6 +67,9 @@ export default {
         isCheck: false,
       });
     };
+    const clickFilter = (value) => {
+      console.log(value);
+    };
     const countAryLength = (value) => {
       DATA.value.listLength = 0;
       value.forEach((item) => {
@@ -80,14 +80,12 @@ export default {
     };
 
     const delCompletedTodo = () => {
-      console.log("test click clear all completed todo");
       const Arr = DATA.value.activeAry;
       for (let i = Arr.length - 1; i >= 0; i--) {
         if (Arr[i].isCheck === true) {
           DATA.value.activeAry.splice(i, 1);
         }
       }
-      console.log(DATA.value.activeAry);
     };
 
     onMounted(() => {
@@ -105,6 +103,7 @@ export default {
       addNewTodo,
       countAryLength,
       delCompletedTodo,
+      clickFilter,
     };
   },
 };

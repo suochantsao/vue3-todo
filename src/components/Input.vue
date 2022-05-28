@@ -47,7 +47,6 @@ export default {
         alert("請先輸入代辦");
         return;
       }
-      console.log("Test Add Todo", Input.value.todo);
       emit("newTodo", Input.value.todo);
       Input.value.todo = "";
     };
